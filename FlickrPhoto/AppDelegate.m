@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FlickrKit.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    // key
+    // 8e089660c705c1448d0b0c6865e3cbf0
+    // secret
+    // d70d119518f553d4
+    
+    NSString *apiKey = @"8e089660c705c1448d0b0c6865e3cbf0";
+    NSString *secret = @"d70d119518f553d4";
+    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:apiKey sharedSecret:secret];
+    return YES;
+}
+- (BOOL) application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSString *scheme = [url scheme];
+    if([@"flickrkitdemo" isEqualToString:scheme]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserAuthCallbackNotification" object:url userInfo:nil];
+    }
     return YES;
 }
 
