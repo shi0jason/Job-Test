@@ -63,20 +63,24 @@
                     [photoURLs addObject:url];
                     [photoTitles addObject:[photoDictionary objectForKey:@"title"]];
                 }
-                
+                if ([JSDataManager shareInstance].photoURLs.count > 0) {
+                    [[JSDataManager shareInstance].photoURLs removeAllObjects];
+                }
                 [JSDataManager shareInstance].photoURLs = [NSMutableArray arrayWithArray:photoURLs];
-                [[JSDataManager shareInstance].photoURLs addObject:photoURLs.firstObject];
-                [[JSDataManager shareInstance].photoURLs insertObject:photoURLs.lastObject atIndex:0];
-
+                if ([JSDataManager shareInstance].photoURLs.count > 6) {
+                    [[JSDataManager shareInstance].photoURLs addObject:photoURLs.firstObject];
+                    [[JSDataManager shareInstance].photoURLs insertObject:photoURLs.lastObject atIndex:0];
+                }
                 
+                if ([JSDataManager shareInstance].photoTitles.count > 0) {
+                    [[JSDataManager shareInstance].photoTitles removeAllObjects];
+                }
                 [JSDataManager shareInstance].photoTitles = [NSMutableArray arrayWithArray:photoTitles];
-                [[JSDataManager shareInstance].photoTitles addObject:photoTitles.firstObject];
-                [[JSDataManager shareInstance].photoTitles insertObject:photoTitles.lastObject atIndex:0];
-
+                if ([JSDataManager shareInstance].photoTitles.count > 6) {
+                    [[JSDataManager shareInstance].photoTitles addObject:photoTitles.firstObject];
+                    [[JSDataManager shareInstance].photoTitles insertObject:photoTitles.lastObject atIndex:0];
+                }
                 
-                
-//                [JSDataManager shareInstance].photoURLs = photoURLs;
-//                [JSDataManager shareInstance].photoTitles = photoTitles;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"DataProccessed" object:nil];
             } else {
                 UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"Error"

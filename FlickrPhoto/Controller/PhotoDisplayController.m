@@ -9,6 +9,7 @@
 #import "PhotoDisplayController.h"
 #import "JSDataManager.h"
 #import <UIScrollView+InfiniteScroll.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width / 2
 @interface PhotoDisplayController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
     NSMutableArray<UIImage *> *photoList;
@@ -27,10 +28,12 @@
     self.title = [NSString stringWithFormat:@"%@%@",@"搜尋結果",[JSDataManager shareInstance].searchItemName.length == 0 ? @"" : [JSDataManager shareInstance].searchItemName];
     [self setupCollectionView];
     
-    if (@available(iOS 13.0, *)) {
-        waitView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
-    } else {
-        waitView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    if (!waitView) {
+        if (@available(iOS 13.0, *)) {
+            waitView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
+        } else {
+            waitView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        }
     }
     [waitView setFrame:CGRectMake(self.view.frame.size.width / 2 - waitView.frame.size.width / 2  ,
                                   self.view.frame.size.height / 2 - waitView.frame.size.height / 2, 50,50)];
@@ -89,8 +92,16 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoDisplayControllerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@",[JSDataManager shareInstance].photoURLs[indexPath.row]];
-    cell.displayImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
+//    NSString *urlString = [NSString stringWithFormat:@"%@",[JSDataManager shareInstance].photoURLs[indexPath.row]];
+//    cell.displayImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [cell.displayImage sd_setImageWithURL:[JSDataManager shareInstance].photoURLs[indexPath.row]
+                                   placeholderImage:[UIImage imageNamed:@"photo.png"]
+                                            options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                          completed:nil];
+    });
+
     cell.itemName.text = [JSDataManager shareInstance].photoTitles[indexPath.row];
     return cell;
 }
