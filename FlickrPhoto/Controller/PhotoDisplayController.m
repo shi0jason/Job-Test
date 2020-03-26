@@ -76,7 +76,7 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat itemunit = (self.view.frame.size.width) / 2;
-    NSInteger page = roundf(self.photoCollectionDisplayView.contentOffset.y / itemunit);
+    NSInteger page = ceil(self.photoCollectionDisplayView.contentOffset.y / itemunit);
     NSLog(@"y = %.2f",self.photoCollectionDisplayView.contentOffset.y);
     if (page == 0) {
         self.photoCollectionDisplayView.contentOffset = CGPointMake(0 ,itemunit * ([JSDataManager shareInstance].photoURLs.count / 2 - 3));
