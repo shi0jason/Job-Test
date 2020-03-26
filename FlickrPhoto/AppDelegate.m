@@ -18,8 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSString *apiKey = @"apikey";
-    NSString *secret = @"secret";
+    NSString *apiKey = @"8e089660c705c1448d0b0c6865e3cbf0";
+    NSString *secret = @"d70d119518f553d4";
+
     [[FlickrKit sharedFlickrKit] initializeWithAPIKey:apiKey sharedSecret:secret];
     return YES;
 }

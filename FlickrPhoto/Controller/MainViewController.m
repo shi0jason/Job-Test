@@ -79,8 +79,13 @@
 //                [JSDataManager shareInstance].photoTitles = photoTitles;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"DataProccessed" object:nil];
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                                 message:error.localizedDescription
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"cancel"
+                                                                 style:UIAlertActionStyleCancel handler:nil];
+                [alertVC addAction:action];
+                [self presentViewController:alertVC animated:YES completion:nil];
             }
         });
     }];
