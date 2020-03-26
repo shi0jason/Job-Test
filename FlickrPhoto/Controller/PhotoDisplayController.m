@@ -11,7 +11,8 @@
 #import <UIScrollView+InfiniteScroll.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width / 2
-@interface PhotoDisplayController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
+#define kCachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+@interface PhotoDisplayController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PhotoDisplayControllerCellDelegate> {
     NSMutableArray<UIImage *> *photoList;
     UIActivityIndicatorView *waitView;
     
@@ -68,7 +69,7 @@
 }
 - (void)refreshData {
     [waitView stopAnimating];
-    [waitView setHidden:true]; 
+    [waitView setHidden:true];
     [self.photoCollectionDisplayView setContentOffset:CGPointMake(0, 0)];
     [self.photoCollectionDisplayView reloadData];
 }
@@ -92,13 +93,13 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoDisplayControllerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.cdelegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         [cell.displayImage sd_setImageWithURL:[JSDataManager shareInstance].photoURLs[indexPath.row]
-                                   placeholderImage:[UIImage imageNamed:@"photo.png"]
-                                            options:SDWebImageRetryFailed|SDWebImageLowPriority
-                                          completed:nil];
+                             placeholderImage:[UIImage imageNamed:@"photo.png"]
+                                      options:SDWebImageRetryFailed|SDWebImageLowPriority
+                                    completed:nil];
     });
-
     cell.itemName.text = [JSDataManager shareInstance].photoTitles[indexPath.row];
     return cell;
 }
@@ -106,6 +107,42 @@
     CGFloat width = (self.view.frame.size.width - 10) / 2;
     CGFloat height = collectionView.frame.size.height / 3;
     return CGSizeMake(width, height);
+}
+- (void)cellClick:(PhotoDisplayControllerCell *)cell {
+    NSIndexPath *indexPath = [self.photoCollectionDisplayView indexPathForCell:cell];
+    
+    if ([JSDataManager shareInstance].photoTitles.count > 0 && [JSDataManager shareInstance].photoURLs[indexPath.row] > 0) {
+        NSString *title = [JSDataManager shareInstance].photoTitles[indexPath.row];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *titleList = [[userDefaults objectForKey:@"title"] mutableCopy];
+        if (titleList == nil) {
+            titleList = [NSMutableArray array];
+        }
+        BOOL isDownloaded = false;
+        for (NSString *titleString in titleList) {
+            if ([title isEqualToString:titleString]) {
+                isDownloaded = true;
+            }
+        }
+        if (!isDownloaded) {
+            [titleList addObject:title];
+            [self saveImageWith:title Cell:cell];
+        }
+
+        [userDefaults setObject:titleList forKey:@"title"];
+        [userDefaults synchronize];
+    }
+}
+- (void)saveImageWith:(NSString *)title Cell:(PhotoDisplayControllerCell *)cell {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *directryPath = [kCachePath stringByAppendingPathComponent:@"/jpegFile"];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@.jpeg",directryPath,title];
+    
+    NSError *writeError = nil;
+    NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(cell.displayImage.image, 80)];
+    [fileManager createDirectoryAtPath:directryPath withIntermediateDirectories:YES attributes:nil error:nil];
+    [imageData writeToFile:filePath options:NSDataWritingAtomic error:&writeError];
+
 }
 @end
 @implementation PhotoDisplayControllerCell
@@ -117,19 +154,19 @@
     self.favoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self.favoriteButton setImage:[UIImage imageNamed:@"star.png"] forState:UIControlStateNormal];
-//    [self.favoriteButton addTarget:self action:@selector(addFavoriteClick) forControlEvents:UIControlEventTouchUpInside];
-        
+    [self.favoriteButton addTarget:self action:@selector(addFavoriteClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self addSubview:self.displayImage];
     [self addSubview:self.itemName];
-//    [self addSubview:self.favoriteButton];
-
+    [self addSubview:self.favoriteButton];
+    
+    [self setupConstraint];
     return self;
 }
 - (void)addFavoriteClick:(UIButton *)sender {
-    UIView *contentView = [sender superview];
-    PhotoDisplayControllerCell *cell = (PhotoDisplayControllerCell *)[contentView superview];
-    NSIndexPath *indexPath = [(UITableView *)self.superview indexPathForCell:self];
-    NSLog(@"%@",indexPath);
+    if(self.cdelegate && [self.cdelegate respondsToSelector:@selector(cellClick:)]){
+        [self.cdelegate cellClick:self];
+    }
 }
 - (void)setupConstraint {
     self.displayImage.translatesAutoresizingMaskIntoConstraints = false;

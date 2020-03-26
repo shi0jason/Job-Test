@@ -14,11 +14,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol PhotoDisplayControllerCellDelegate;
+
 @interface PhotoDisplayControllerCell : UICollectionViewCell
 
+@property (nonatomic, assign) id<PhotoDisplayControllerCellDelegate> cdelegate;
 @property (nonatomic, strong) UIImageView *displayImage;
 @property (nonatomic, strong) UILabel *itemName;
 @property (nonatomic, strong) UIButton *favoriteButton;
 
 @end
+
+@protocol PhotoDisplayControllerCellDelegate <NSObject>
+
+- (void)cellClick:(PhotoDisplayControllerCell *)cell;
+
+@end
+
 NS_ASSUME_NONNULL_END
