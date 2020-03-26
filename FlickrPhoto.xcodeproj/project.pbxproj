@@ -21,6 +21,7 @@
 		5ED1898F242C4A54007E4B2B /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED1898E242C4A54007E4B2B /* photo.png */; };
 		5ED18992242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED18991242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m */; };
 		5ED18995242C5EDE007E4B2B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED18994242C5EDE007E4B2B /* star.png */; };
+		5ED1899B242C8896007E4B2B /* PhotoTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED1899A242C8896007E4B2B /* PhotoTabViewController.m */; };
 		6BDE0617BC02741356F220EC /* libPods-FlickrPhoto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DCC0BA23EC3600B88F834C /* libPods-FlickrPhoto.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,8 @@
 		5ED18990242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavoritePhotoDisplayControllerViewController.h; sourceTree = "<group>"; };
 		5ED18991242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavoritePhotoDisplayControllerViewController.m; sourceTree = "<group>"; };
 		5ED18994242C5EDE007E4B2B /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		5ED18999242C8896007E4B2B /* PhotoTabViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PhotoTabViewController.h; path = "/Users/cch/Job-Test/FlickrPhoto/Controller/PhotoTabViewController.h"; sourceTree = "<absolute>"; };
+		5ED1899A242C8896007E4B2B /* PhotoTabViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PhotoTabViewController.m; path = "/Users/cch/Job-Test/FlickrPhoto/Controller/PhotoTabViewController.m"; sourceTree = "<absolute>"; };
 		81DCC0BA23EC3600B88F834C /* libPods-FlickrPhoto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlickrPhoto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A977120A8B2832E617E87978 /* Pods-FlickrPhoto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrPhoto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlickrPhoto/Pods-FlickrPhoto.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,6 +189,8 @@
 				5E171670241B5F4700A452B2 /* PhotoDisplayController.m */,
 				5ED18990242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.h */,
 				5ED18991242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m */,
+				5ED18999242C8896007E4B2B /* PhotoTabViewController.h */,
+				5ED1899A242C8896007E4B2B /* PhotoTabViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -365,6 +370,7 @@
 				5E171641241B5A6000A452B2 /* MainViewController.m in Sources */,
 				5E17163B241B5A6000A452B2 /* AppDelegate.m in Sources */,
 				5E171674241B70F500A452B2 /* JSDataManager.m in Sources */,
+				5ED1899B242C8896007E4B2B /* PhotoTabViewController.m in Sources */,
 				5E171671241B5F4700A452B2 /* PhotoDisplayController.m in Sources */,
 				5E17164C241B5A6300A452B2 /* main.m in Sources */,
 				5ED18992242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m in Sources */,

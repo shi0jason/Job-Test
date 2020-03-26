@@ -128,7 +128,6 @@
             [titleList addObject:title];
             [self saveImageWith:title Cell:cell];
         }
-
         [userDefaults setObject:titleList forKey:@"title"];
         [userDefaults synchronize];
     }

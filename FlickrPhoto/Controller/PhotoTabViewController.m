@@ -7,7 +7,7 @@
 
 #import "PhotoTabViewController.h"
 
-@interface PhotoTabViewController ()
+@interface PhotoTabViewController () <UITabBarControllerDelegate>
 
 @end
 
@@ -15,17 +15,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+//    // Do any additional setup after loading the view.
+//    self.delegate = self;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    if(self.tabDelegate && [self.tabDelegate respondsToSelector:@selector(tabbarClick)]){
+        [self.tabDelegate tabbarClick];
+    }
 }
-*/
-
 @end
