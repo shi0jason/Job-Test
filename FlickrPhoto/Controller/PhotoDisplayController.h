@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImageView *displayImage;
 @property (nonatomic, strong) UILabel *itemName;
+@property (nonatomic, strong) UIButton *favoriteButton;
 
 @end
 NS_ASSUME_NONNULL_END

@@ -20,6 +20,7 @@
 		5E171674241B70F500A452B2 /* JSDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E171673241B70F500A452B2 /* JSDataManager.m */; };
 		5ED1898F242C4A54007E4B2B /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED1898E242C4A54007E4B2B /* photo.png */; };
 		5ED18992242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED18991242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m */; };
+		5ED18995242C5EDE007E4B2B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ED18994242C5EDE007E4B2B /* star.png */; };
 		6BDE0617BC02741356F220EC /* libPods-FlickrPhoto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DCC0BA23EC3600B88F834C /* libPods-FlickrPhoto.a */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		5ED1898E242C4A54007E4B2B /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
 		5ED18990242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavoritePhotoDisplayControllerViewController.h; sourceTree = "<group>"; };
 		5ED18991242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavoritePhotoDisplayControllerViewController.m; sourceTree = "<group>"; };
+		5ED18994242C5EDE007E4B2B /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		81DCC0BA23EC3600B88F834C /* libPods-FlickrPhoto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlickrPhoto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A977120A8B2832E617E87978 /* Pods-FlickrPhoto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrPhoto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlickrPhoto/Pods-FlickrPhoto.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 		5E171638241B5A6000A452B2 /* FlickrPhoto */ = {
 			isa = PBXGroup;
 			children = (
+				5ED18993242C5EBC007E4B2B /* ImageSet */,
 				5E171677241B7E7C00A452B2 /* Controller */,
 				5E171676241B7E5C00A452B2 /* TempObject */,
 				5E171675241B76D900A452B2 /* FlickrPhoto.entitlements */,
@@ -139,7 +142,6 @@
 				5E17163C241B5A6000A452B2 /* SceneDelegate.h */,
 				5E17163D241B5A6000A452B2 /* SceneDelegate.m */,
 				5E171642241B5A6000A452B2 /* Main.storyboard */,
-				5ED1898E242C4A54007E4B2B /* photo.png */,
 				5E171645241B5A6300A452B2 /* Assets.xcassets */,
 				5E171647241B5A6300A452B2 /* LaunchScreen.storyboard */,
 				5E17164A241B5A6300A452B2 /* Info.plist */,
@@ -186,6 +188,15 @@
 				5ED18991242C586B007E4B2B /* FavoritePhotoDisplayControllerViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		5ED18993242C5EBC007E4B2B /* ImageSet */ = {
+			isa = PBXGroup;
+			children = (
+				5ED1898E242C4A54007E4B2B /* photo.png */,
+				5ED18994242C5EDE007E4B2B /* star.png */,
+			);
+			path = ImageSet;
 			sourceTree = "<group>";
 		};
 		A3F74A3BB9389AE38B069488 /* Pods */ = {
@@ -302,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E171649241B5A6300A452B2 /* LaunchScreen.storyboard in Resources */,
+				5ED18995242C5EDE007E4B2B /* star.png in Resources */,
 				5E171646241B5A6300A452B2 /* Assets.xcassets in Resources */,
 				5ED1898F242C4A54007E4B2B /* photo.png in Resources */,
 				5E171644241B5A6000A452B2 /* Main.storyboard in Resources */,

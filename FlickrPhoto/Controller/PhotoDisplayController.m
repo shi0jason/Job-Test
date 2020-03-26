@@ -114,12 +114,27 @@
     
     self.displayImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.itemName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.favoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
-    self.displayImage.translatesAutoresizingMaskIntoConstraints = false;
-    self.itemName.translatesAutoresizingMaskIntoConstraints = false;
-    
+    [self.favoriteButton setImage:[UIImage imageNamed:@"star.png"] forState:UIControlStateNormal];
+//    [self.favoriteButton addTarget:self action:@selector(addFavoriteClick) forControlEvents:UIControlEventTouchUpInside];
+        
     [self addSubview:self.displayImage];
     [self addSubview:self.itemName];
+//    [self addSubview:self.favoriteButton];
+
+    return self;
+}
+- (void)addFavoriteClick:(UIButton *)sender {
+    UIView *contentView = [sender superview];
+    PhotoDisplayControllerCell *cell = (PhotoDisplayControllerCell *)[contentView superview];
+    NSIndexPath *indexPath = [(UITableView *)self.superview indexPathForCell:self];
+    NSLog(@"%@",indexPath);
+}
+- (void)setupConstraint {
+    self.displayImage.translatesAutoresizingMaskIntoConstraints = false;
+    self.itemName.translatesAutoresizingMaskIntoConstraints = false;
+    self.favoriteButton.translatesAutoresizingMaskIntoConstraints = false;
     
     [self addConstraints:@[[NSLayoutConstraint constraintWithItem:_displayImage
                                                         attribute:NSLayoutAttributeTop
@@ -146,11 +161,37 @@
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0 constant:0.0],
     ]];
+    [self addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:_favoriteButton
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1.0 constant:0.0],
+        [NSLayoutConstraint constraintWithItem:_favoriteButton
+                                     attribute:NSLayoutAttributeLeft
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeLeft
+                                    multiplier:1.0 constant:0.0],
+        [NSLayoutConstraint constraintWithItem:_favoriteButton
+                                     attribute:NSLayoutAttributeWidth
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1.0 constant:40.0],
+        [NSLayoutConstraint constraintWithItem:_favoriteButton
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1.0 constant:40.0],
+    ]];
     [self addConstraints:@[[NSLayoutConstraint constraintWithItem:_itemName
                                                         attribute:NSLayoutAttributeHeight
-                                                        relatedBy:NSLayoutAttributeNotAnAttribute
+                                                        relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
-                                                        attribute:NSLayoutAttributeHeight
+                                                        attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0 constant:30.0],
                            [NSLayoutConstraint constraintWithItem:_itemName
                                                         attribute:NSLayoutAttributeRight
@@ -171,7 +212,5 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0 constant:0.0],
     ]];
-
-    return self;
 }
 @end
