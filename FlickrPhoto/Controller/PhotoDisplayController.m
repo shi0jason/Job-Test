@@ -50,6 +50,7 @@
     collectLayout.itemSize = CGSizeMake(width, width);
     
     self.photoCollectionDisplayView.pagingEnabled = true;
+    self.photoCollectionDisplayView.scrollEnabled = true;
     self.photoCollectionDisplayView.delegate = self;
     self.photoCollectionDisplayView.dataSource = self;
     self.photoCollectionDisplayView.collectionViewLayout = collectLayout;
@@ -67,19 +68,19 @@
 }
 - (void)refreshData {
     [waitView stopAnimating];
-    [waitView setHidden:true];
-    CGFloat width = (self.view.frame.size.width) / 2 ;
-    [self.photoCollectionDisplayView setContentOffset:CGPointMake(0, 2000)];
+    [waitView setHidden:true]; 
+    [self.photoCollectionDisplayView setContentOffset:CGPointMake(0, 0)];
     [self.photoCollectionDisplayView reloadData];
 }
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat itemunit = (self.view.frame.size.width) / 2;
-    NSInteger page = self.photoCollectionDisplayView.contentOffset.y / itemunit;
+    NSInteger page = roundf(self.photoCollectionDisplayView.contentOffset.y / itemunit);
+    NSLog(@"y = %.2f",self.photoCollectionDisplayView.contentOffset.y);
     if (page == 0) {
-//        self.photoCollectionDisplayView.contentOffset = CGPointMake(0 ,itemunit * ([JSDataManager shareInstance].photoURLs.count - 2));
-    } else if (page == [JSDataManager shareInstance].photoURLs.count - 1){
-        self.photoCollectionDisplayView.contentOffset = CGPointMake(0, self.photoCollectionDisplayView.bounds.size.height);
+        self.photoCollectionDisplayView.contentOffset = CGPointMake(0 ,itemunit * ([JSDataManager shareInstance].photoURLs.count / 2 - 3));
+    } else if (page == [JSDataManager shareInstance].photoURLs.count / 2 - 2){
+        self.photoCollectionDisplayView.contentOffset = CGPointMake(0, 0);
     }
 }
 #pragma mark - Collect Delegate
@@ -91,10 +92,6 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoDisplayControllerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    
-//    NSString *urlString = [NSString stringWithFormat:@"%@",[JSDataManager shareInstance].photoURLs[indexPath.row]];
-//    cell.displayImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [cell.displayImage sd_setImageWithURL:[JSDataManager shareInstance].photoURLs[indexPath.row]
                                    placeholderImage:[UIImage imageNamed:@"photo.png"]
@@ -107,7 +104,8 @@
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat width = (self.view.frame.size.width - 10) / 2;
-    return CGSizeMake(width, width);
+    CGFloat height = collectionView.frame.size.height / 3;
+    return CGSizeMake(width, height);
 }
 @end
 @implementation PhotoDisplayControllerCell
